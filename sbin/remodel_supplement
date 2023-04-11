@@ -1,0 +1,16 @@
+#!/bin/sh
+
+local model=`getfirm MODEL`
+
+if [ "$model" == "Archer AX1800" ] ; then
+	uci set locale.sysinfo.model="AX1800 Wi-Fi 6 Router"
+	echo locale.sysinfo.model="AX1800 Wi-Fi 6 Router" > /dev/console
+elif [ "$model" == "Archer AX20" ] ; then
+	uci set locale.sysinfo.model="AX1800 Wi-Fi 6 Router"
+	echo locale.sysinfo.model="AX1800 Wi-Fi 6 Router" > /dev/console
+elif [ "$model" == "Archer AX21" ] ; then
+	uci set locale.sysinfo.model="AX1800 Wi-Fi 6 Router"
+	echo locale.sysinfo.model="AX1800 Wi-Fi 6 Router" > /dev/console
+fi
+
+uci commit

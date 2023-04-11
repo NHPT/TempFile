@@ -1,0 +1,7 @@
+# pids=`ps | grep "smbd" | grep -v "grep"| egrep -o "^ *[0-9]+"`
+pids=`pgrep "smbd"`
+for pid in $pids;
+do
+	taskset -p 2 $pid
+	echo 2 > /proc/irq/188/smp_affinity
+done

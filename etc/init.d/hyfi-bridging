@@ -1,0 +1,20 @@
+#!/bin/sh /etc/rc.common
+
+START=40
+
+start() {
+    local sysmode=`uci get sysmode.sysmode.mode`
+
+    [ "$sysmode" != "repeater" -a "$sysmode" != "router" ] && return
+
+    echo "========>>>>>>>>>>> insmod hyfi-bridging" > /dev/console
+    insmod /lib/modules/iplatform/hyfi-bridging.ko
+}
+
+stop() {
+    return 0
+}
+
+reload() {
+    return 0
+}

@@ -1,0 +1,53 @@
+#!/bin/sh
+# Copyright (C) 2006 OpenWrt.org
+# Copyright (C) 2010 Vertical Communications
+
+run_init_for_tp_qca() {
+        echo "run_init_for_tp_qca(): start to init for tp qca router..."
+        SPECILA_ID=$(getfirm SPECIAL_ID)
+        HW_VER=$(getfirm HW_VER)
+		
+		if [ "$(/sbin/is_cal)" = "true" ]; then
+			rm /etc/modules.d/53-diag-char
+		fi
+
+        if [ "$SPECILA_ID" == "45550000" -o "$SPECILA_ID" == "4A500000" ]; then
+                echo "run_init_for_tp_qca(): Copy EU Filesystem !!!!!"
+                cp -pR /EU/default/*  /
+                [ -d /EU/$HW_VER ] && cp -pR /EU/$HW_VER/* /
+				if [ "$SPECILA_ID" == "4A500000" ]; then
+					#echo "country JP, change nss ipv4/6 config to 2k+2k." > /dev/console
+					file=$(ls /etc/modules.d/*qca-nss-drv)
+					sed -i '1 s/qca-nss-drv.*/qca-nss-drv max_ipv4_conn=2048 max_ipv6_conn=2048/g' $file
+				fi
+        fi
+
+        if [ "$SPECILA_ID" == "55530000" -o "$SPECILA_ID" == "53470000"]; then
+                echo "run_init_for_tp_qca(): Copy US Filesystem !!!!!"
+                cp -pR /US/default/*  /
+                [ -d /US/$HW_VER ] && cp -pR /US/$HW_VER/* /
+        fi
+		
+        if [ "$SPECILA_ID" == "43410000" ]; then
+                echo "run_init_for_tp_qca(): Copy CA Filesystem !!!!!"
+                cp -pR /CA/default/*  /
+                [ -d /CA/$HW_VER ] && cp -pR /CA/$HW_VER/* /
+        fi
+
+        if [ "$SPECILA_ID" == "54570000" ]; then
+                echo "run_init_for_tp_qca(): Copy TW Filesystem !!!!!"
+                cp -pR /TW/default/*  /
+                [ -d /TW/$HW_VER ] && cp -pR /TW/$HW_VER/* /
+        fi
+
+        if [ "$SPECILA_ID" == "52550000" ]; then
+                echo "run_init_for_tp_qca(): Copy RU Filesystem !!!!!"
+                cp -pR /RU/default/*  /
+                [ -d /RU/$HW_VER ] && cp -pR /RU/$HW_VER/* /
+        fi
+
+}
+
+
+boot_hook_add preinit_main run_init_for_tp_qca
+

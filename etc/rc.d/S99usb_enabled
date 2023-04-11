@@ -1,0 +1,21 @@
+#!/bin/sh /etc/rc.common
+
+START=99
+
+boot() {
+	echo 0 > /sys/class/leds/usb_enabled/brightness
+	{
+		sleep 1
+		devmem 0x183E034 32 1
+		##set gpio46 to enable usb power
+		echo 1 > /sys/class/leds/usb_enabled/brightness
+	} &
+}
+
+start() {
+    return 0
+}
+
+stop() {
+    return 0
+}

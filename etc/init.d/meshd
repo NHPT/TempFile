@@ -1,0 +1,23 @@
+#!/bin/sh /etc/rc.common
+
+START=50
+
+SERVICE_PATH="/usr/bin/meshd"
+start()
+{
+	config_load sysmode
+	config_load onemesh
+	
+	config_get mode sysmode mode "router"
+	
+	if [ "$mode" = "ap" ];then
+		return
+	else
+		${SERVICE_PATH} &
+	fi	
+}
+
+stop()
+{
+	killall meshd
+}

@@ -1,0 +1,22 @@
+#!/bin/sh /etc/rc.common
+
+START=49
+SERVICE_DAEMONIZE=1
+SERVICE_PATH="/usr/bin/apsd"
+local ieee1905managed_bridge=lan
+start() 
+{
+    echo "========>>>>>>>>>>> apsd start" > /dev/console
+
+    ${SERVICE_PATH} -c /etc/apsd.json &
+}
+
+stop() {
+    #do nothing
+    echo "stop apsd"
+}
+
+restart() {
+	stop
+	start
+}
